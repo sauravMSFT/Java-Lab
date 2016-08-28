@@ -15,12 +15,12 @@ public class Equation
     public Equation(double a, double b, double c) throws Exception
     {
         //ALT CODE for 2 SUP is 253
-        if (a == 0.0F) throw new Exception("Coefficient of x² cannot be zero...");
+        if (a == 0.0) throw new Exception("coefficient of x² cannot be zero...");
 
         this.a = a;
         this.b = b;
         this.c = c;
-        det = b * b - 4 * a * c;
+        det = Math.sqrt(b * b - 4 * a * c);
     }
 
     public double Discriminant()
@@ -34,8 +34,8 @@ public class Equation
 
         if (det >= 0)
         {
-            s1 = (-b + Math.sqrt(det)) / (2 * a);
-            s2 = (-b - Math.sqrt(det)) / (2 * a);
+            s1 = (-b + det) / (2 * a);
+            s2 = (-b - det) / (2 * a);
 
             return new Complex[]{new Complex(s1, 0), new Complex(s2, 0)};
         } else
