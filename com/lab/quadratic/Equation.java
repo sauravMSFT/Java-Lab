@@ -23,7 +23,7 @@ public class Equation
         det = b * b - 4 * a * c;
     }
 
-    public double Determinant()
+    public double Discriminant()
     {
         return det;
     }
@@ -38,8 +38,7 @@ public class Equation
             s2 = (-b - Math.sqrt(det)) / (2 * a);
 
             return new Complex[]{new Complex(s1, 0), new Complex(s2, 0)};
-        }
-        else
+        } else
         {
             s1 = -b / (2 * a);
             s2 = Math.sqrt(-det) / (2 * a);
@@ -71,11 +70,11 @@ public class Equation
                 double a, b, c;
                 p.print("a = ");
                 p.flush();
-                a= Double.parseDouble(s.readLine());
+                a = Double.parseDouble(s.readLine());
 
                 p.print("b = ");
                 p.flush();
-                b= Double.parseDouble(s.readLine());
+                b = Double.parseDouble(s.readLine());
 
                 p.print("c = ");
                 p.flush();
@@ -91,11 +90,11 @@ public class Equation
 
         p.println("The given equation: " + eq.toString());
         String str;
-        Complex []solutions = eq.Solution();
+        Complex[] solutions = eq.Solution();
 
-        if (eq.Determinant() > 0)
+        if (eq.Discriminant() > 0)
             str = "two real and distinct roots.";
-        else if (eq.Determinant() == 0)
+        else if (eq.Discriminant() == 0)
             str = "real but equal roots";
         else
             str = "complex roots";
@@ -107,7 +106,7 @@ public class Equation
         p.println("x = " + solutions[1]);
     }
 
-    public static void main(String []args)
+    public static void main(String[] args)
     {
         demo();
     }
