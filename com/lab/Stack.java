@@ -15,6 +15,7 @@ public class Stack<T>
 
     public Stack(int size)
     {
+
         stack = new ArrayList<>();
         top = -1;
         count = 0;
@@ -33,8 +34,7 @@ public class Stack<T>
     public T Pop() throws Exception
     {
         if (stack.isEmpty())
-            throw new Exception("Stack Underflow... Could not Dequeue element.");
-
+            throw new Exception("Stack Underflow... Could not Pop element.");
         top--;
         count--;
         return stack.remove(top + 1);
@@ -68,7 +68,7 @@ public class Stack<T>
 
         while (true)
         {
-            System.out.println("Stack Operations:\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit");
+            System.out.println("Stack Operations:\n1. Push\n2. Pop\n3. Display\n4. Exit");
             System.out.print("Enter your choice: ");
 
 
@@ -77,7 +77,7 @@ public class Stack<T>
             switch (choice)
             {
                 case 1:
-                    System.out.println("Enter the number to Enqueue: ");
+                    System.out.println("Enter the number to Push: ");
                     item = Integer.parseInt(br.readLine());
 
                     try
