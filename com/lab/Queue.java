@@ -30,7 +30,7 @@ public class Queue<T>
 
     public T Dequeue() throws Exception
     {
-        if (queue.isEmpty())
+        if (count == 0)
             throw new Exception("Queue Underflow... Can't dequeue item.");
 
         count--;
