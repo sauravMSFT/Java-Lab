@@ -1,7 +1,5 @@
 package com.lab;
 
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,14 +9,15 @@ import java.io.InputStreamReader;
  */
 public class ExceptionHandling {
     public static void division()
-            throws IOException, NumberFormatException, ArithmeticException, ArrayIndexOutOfBoundsException, Exception {
+            throws IOException, NumberFormatException, ArithmeticException, ArrayIndexOutOfBoundsException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int a, b;
 
         System.out.print("Enter two numbers separated by space: ");
         String line = br.readLine().trim();
-        if (line.equals("")) throw new Exception("Expected two integers, found empty string.");
+        if (line.equals("")) throw new IOException("Expected two integers, found empty string.");
         String[] str = line.split(" ");
+        if(str.length < 2) throw new IOException("Only one input was encountered.");
 
         a = Integer.parseInt(str[0]);
         b = Integer.parseInt(str[1]);
@@ -35,7 +34,7 @@ public class ExceptionHandling {
                 division();
                 success = true;
             } catch (IOException e) {
-                System.out.println("Could not read input correctly.");
+                System.out.println(e.getMessage());
             } catch (NumberFormatException e) {
                 System.out.println("Could not parse input as Integers.");
             } catch (ArithmeticException e) {
