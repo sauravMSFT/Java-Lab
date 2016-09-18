@@ -16,23 +16,6 @@ public class Examinee extends Student {
         this.marks = marks;
     }
 
-    protected String getResult(double avg) {
-        if (avg > 75)
-            return "First Class with Distinction";
-        else if (avg > 65)
-            return "First Class";
-        else if (avg > 55)
-            return "Second Class";
-        else
-            return "Fail";
-    }
-
-    public String showReport() {
-        StringBuffer rep = new StringBuffer();
-        double avg = Arrays.stream(marks).sum() / marks.length;
-        return getResult(avg);
-    }
-
     @Override
     public String toString() {
         StringBuffer rep = new StringBuffer();
@@ -40,7 +23,7 @@ public class Examinee extends Student {
                 + "University Serial Number: " + reg + '\n'
                 + "Semester: " + semester + '\n'
                 + "Marks: " + Arrays.toString(marks) + '\n'
-                + "Result: " + showReport());
+                + "Total Marks: " + Arrays.stream(marks).sum() + " / " + 800);
         return rep.toString();
     }
 
