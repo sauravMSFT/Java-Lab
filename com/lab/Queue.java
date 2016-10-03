@@ -3,6 +3,7 @@ package com.lab;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by saurav_msft on 22/8/16.
@@ -22,19 +23,24 @@ public class Queue<T>
 
     public void Enqueue(T item) throws Exception
     {
-        if (count == maxSize)
-            throw new Exception("Queue Overflow... Can't enqueue anymore items.");
         queue.add(item);
         count++;
     }
 
-    public T Dequeue() throws Exception
+    public T Dequeue()
     {
-        if (count == 0)
-            throw new Exception("Queue Underflow... Can't dequeue item.");
-
         count--;
         return queue.remove(0);
+    }
+
+    public int size()
+    {
+        return queue.size();
+    }
+
+    public int maxSize()
+    {
+        return maxSize;
     }
 
     public void Display()
@@ -45,10 +51,7 @@ public class Queue<T>
     @Override
     public String toString()
     {
-        StringBuffer rep = new StringBuffer("[ ");
-        for (int i = 0; i < count; ++i) rep.append(String.format("%1$s  ", queue.get(i)));
-        rep.append("] <--");
-        return rep.toString();
+        return Arrays.toString(queue.toArray()) + " <--";
     }
 
     private static void demo() throws Exception
@@ -71,28 +74,28 @@ public class Queue<T>
             switch (choice)
             {
                 case 1:
-                    System.out.println("Enter the number to Enqueue: ");
-                    item = Integer.parseInt(br.readLine());
-
-                    try
+                    if (queue.size() == queue.maxSize())
                     {
-                        queue.Enqueue(item);
-                        System.out.println(item + " was enqueued.");
+                        System.out.println("Queue Overflow...");
+                        break;
                     }
-                    catch (Exception e) { System.out.println(e.getMessage()); }
-
+                    System.out.print("Enter the number to Enqueue: ");
+                    item = Integer.parseInt(br.readLine());
+                    queue.Enqueue(item);
+                    System.out.println(item + " was enqueued.");
                     break;
 
                 case 2:
-                    try
+                    if (queue.size() == 0)
                     {
-                        item = queue.Dequeue();
-                        System.out.println(item + " was dequeued.");
+                        System.out.println("Queue Underflow...");
+                        break;
                     }
-                    catch (Exception e) { System.out.println(e.getMessage()); }
+                    item = queue.Dequeue();
+                    System.out.println(item + " was dequeued.");
                     break;
                 case 3:
-                    System.out.println("The queue contains: ");
+                    System.out.print("The queue contains: ");
                     queue.Display();
                     break;
                 case 4:

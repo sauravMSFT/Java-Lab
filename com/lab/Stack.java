@@ -3,6 +3,7 @@ package com.lab;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by saurav_msft on 22/8/16.
@@ -22,19 +23,25 @@ public class Stack<T>
         maxSize = size;
     }
 
-    public void Push(T item) throws Exception
+    public int size()
     {
-        if (top == maxSize - 1)
-            throw new Exception("Stack Overflow... Could not Enqueue " + item + ".");
+        return stack.size();
+    }
+
+    public int maxSize()
+    {
+        return maxSize;
+    }
+
+    public void Push(T item)
+    {
         stack.add(item);
         top++;
         count++;
     }
 
-    public T Pop() throws Exception
+    public T Pop()
     {
-        if (stack.isEmpty())
-            throw new Exception("Stack Underflow... Could not Pop element.");
         top--;
         count--;
         return stack.remove(top + 1);
@@ -48,22 +55,14 @@ public class Stack<T>
     @Override
     public String toString()
     {
-        StringBuffer rep = new StringBuffer("--> [ ");
-        if (top != -1)
-        {
-            for (int i = top; i > 0; --i) rep.append(String.format("%1$s, ", stack.get(i)));
-            rep.append(String.format("%1$s ]", stack.get(0)));
-        } else rep.append("]");
-        return rep.toString();
+        return Arrays.toString(stack.toArray()) + " <-- ";
     }
 
     private static void demo() throws Exception
     {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         System.out.print("Enter the size of the stack: ");
-        int size = Integer.parseInt(br.readLine());
-
+        int size = Integer.parseInt(br.readLine()), item;
         Stack<Integer> stack = new Stack<>(size);
 
         while (true)
@@ -71,31 +70,28 @@ public class Stack<T>
             System.out.println("Stack Operations:\n1. Push\n2. Pop\n3. Display\n4. Exit");
             System.out.print("Enter your choice: ");
 
-
-            int choice = Integer.parseInt(br.readLine());
-            int item;
-            switch (choice)
+            switch (Integer.parseInt(br.readLine()))
             {
                 case 1:
-                    System.out.println("Enter the number to Push: ");
-                    item = Integer.parseInt(br.readLine());
-
-                    try
+                    if (stack.size() == stack.maxSize())
                     {
-                        stack.Push(item);
-                        System.out.println(item + " was pushed onto the Stack.");
+                        System.out.println("Stack Overflow...");
+                        break;
                     }
-                    catch (Exception e) { System.out.println(e.getMessage()); }
-
+                    System.out.print("Enter the number to Push: ");
+                    item = Integer.parseInt(br.readLine());
+                    stack.Push(item);
+                    System.out.println(item + " was pushed onto the Stack.");
                     break;
 
                 case 2:
-                    try
+                    if (stack.size() == 0)
                     {
-                        item = stack.Pop();
-                        System.out.println(item + " was popped off the Stack.");
+                        System.out.println("Stack Underflow...");
+                        break;
                     }
-                    catch (Exception e) { System.out.println(e.getMessage()); }
+                    item = stack.Pop();
+                    System.out.println(item + " was popped off the Stack.");
                     break;
                 case 3:
                     System.out.println("The stack contains: ");

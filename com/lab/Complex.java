@@ -1,4 +1,4 @@
-package com.lab.quadratic;
+package com.lab;
 
 /**
  * Created by saurav_msft on 7/27/2016.

@@ -7,32 +7,28 @@ import java.util.Arrays;
 /**
  * Created by saurav on 18/9/16.
  */
-public class Examinee extends Student {
+public class Examinee extends Student
+{
 
     protected double[] marks;
 
-    public Examinee(String nameRep, String register, String sem, double[] marks) {
+    public Examinee(String nameRep, String register, String sem, double[] marks)
+    {
         super(register, nameRep, sem);
         this.marks = marks;
     }
 
     @Override
-    public String toString() {
-        StringBuffer rep = new StringBuffer();
-        rep.append("Name: " + getName() + '\n'
-                + "University Serial Number: " + reg + '\n'
-                + "Semester: " + semester + '\n'
-                + "Marks: " + Arrays.toString(marks) + '\n'
-                + "Total Marks: " + Arrays.stream(marks).sum() + " / " + 800);
-        return rep.toString();
+    public String toString()
+    {
+        return super.toString() +
+                "\nMarks: " + Arrays.toString(marks) +
+                "\nTotal Marks: " + Arrays.stream(marks).sum() + " / " + 800;
     }
 
-    public static void main(String[] args) throws Exception{
-        Examinee e = Examinee.fromInput();
-        System.out.println("\n\nReport Card\n"+ e.toString());
-    }
 
-    public static Examinee fromInput() throws Exception {
+    public static Examinee fromInput() throws Exception
+    {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String name, reg, sem, tmp;
         double[] marks = new double[8];
@@ -53,5 +49,11 @@ public class Examinee extends Student {
             marks[i++] = Double.parseDouble(mark);
 
         return new Examinee(name, reg, sem, marks);
+    }
+
+    public static void main(String[] args) throws Exception
+    {
+        Examinee e = Examinee.fromInput();
+        System.out.println("\n\nReport Card\n" + e);
     }
 }

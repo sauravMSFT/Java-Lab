@@ -6,34 +6,50 @@ import java.io.InputStreamReader;
 /**
  * Created by saurav on 18/9/16.
  */
-public class Matrix {
+public class Matrix
+{
     protected int rows, columns;
     protected int[][] val;
 
-    public void read() throws Exception {
+    public void read() throws Exception
+    {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] p;
-        for (int i = 0; i < rows; ++i) {
+        for (int i = 0; i < rows; ++i)
+        {
             p = br.readLine().trim().split(" ");
-            for (int j = 0; j < columns; ++j) {
+            for (int j = 0; j < columns; ++j)
+            {
                 val[i][j] = Integer.parseInt(p[j]);
             }
         }
     }
 
-    public Matrix(int rows, int columns) {
+    public Matrix(int rows, int columns)
+    {
         this.rows = rows;
         this.columns = columns;
         val = new int[rows][columns];
     }
 
-    public Matrix multiply(Matrix B) {
+    public boolean isMultiplicationCompatible(Matrix B)
+    {
+        return this.columns == B.rows;
+    }
+
+    public Matrix multiply(Matrix B) throws Exception
+    {
+        if (!isMultiplicationCompatible(B))
+            throw new Exception("RowColumnSizeMismatch: Matrices cannot be multiplied");
         Matrix C = new Matrix(rows, B.columns);
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < B.columns; j++) {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < B.columns; j++)
+            {
                 C.val[i][j] = 0;
-                for (int k = 0; k < columns; k++) {
+                for (int k = 0; k < columns; k++)
+                {
                     C.val[i][j] += val[i][k] * B.val[k][j];
                 }
             }
@@ -42,10 +58,13 @@ public class Matrix {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuffer rep = new StringBuffer();
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < columns; ++j) {
+        for (int i = 0; i < rows; ++i)
+        {
+            for (int j = 0; j < columns; ++j)
+            {
                 rep.append(val[i][j] + " ");
             }
             rep.append('\n');
@@ -53,7 +72,8 @@ public class Matrix {
         return rep.toString();
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception
+    {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int a, b;
         System.out.print("Enter number of rows in A: ");
@@ -70,12 +90,16 @@ public class Matrix {
 
         Matrix B = new Matrix(a, b);
 
-        System.out.println("Enter matrix A:");
-        A.read();
-        System.out.println("Enter matrix B");
-        B.read();
+        if (A.isMultiplicationCompatible(B))
+        {
+            System.out.println("Enter matrix A:");
+            A.read();
+            System.out.println("Enter matrix B");
+            B.read();
+            Matrix C = A.multiply(B);
+            System.out.println("\nMatrix C\n" + C);
+        } else
+            System.out.println("RowColumnSizeMismatch: Matrices cannot be multiplied");
 
-        Matrix C = A.multiply(B);
-        System.out.println(C);
     }
 }
