@@ -2,6 +2,8 @@ package com.lab;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -77,30 +79,25 @@ public class Text
             val.add(ch);
     }
 
-    public static int strcmp(Text a, Text b)
+    public static boolean strcmp(Text a, Text b)
     {
 
         int l1, l2, c1, c2;
 
         l1 = a.strlen();
         l2 = b.strlen();
-
-        int less = Math.min(l1, l2);
-        for (int i = 0; i < less; ++i)
+        if(l1 != l2) return false;
+        for (int i = 0; i < l1; ++i)
         {
             c1 = a.val.get(i);
             c2 = b.val.get(i);
             if (c1 != c2)
-                return c1 - c2;
+                return false;
         }
-        if (l1 == l2)
-            return 0;
-        else if (l1 > l2)
-            return a.val.get(l1 - 1);
-        else return b.val.get(l2 - 1);
+        return true;
     }
 
-    public static int strcmp(String a, String b)
+    public static boolean strcmp(String a, String b)
     {
         return strcmp(new Text(a), new Text(b));
     }
@@ -135,47 +132,32 @@ public class Text
         return rep.toString();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter p = new PrintWriter(System.out, true);
 
-        Text greet = new Text("Hello. "), question = new Text("How are you?");
-        Text reply = new Text(new char[]{'G', 'o', 'o', 'd'});
+        p.println("Enter String 1: ");
+        Text str1 = new Text(br.readLine().trim());
 
-        p.println("\ntoString\n");
-        op("greet = ", greet);
-        op("question = ", question);
-        op("reply = ", reply);
+        p.println("Enter String 2: ");
+        Text str2 = new Text(br.readLine().trim());
 
-        p.println("\nstrcat\n");
-        op("greet: ", greet);
-        greet.strcat(question);
-        op("greet = greet + question: ", greet);
+        p.println("Enter String 3: ");
+        Text str3 = new Text(br.readLine().trim());
 
-        p.println("\ncharAt\n");
-        op("reply[1] = ", reply.charAt(0));
-        op("Slicing reply[1:3] = ", reply.charAt(1, 3));
+        p.print(String.format("\n1. strcpy\n\"%1$s\".strcpy(\"%2$s\") = \"", str1, str2));
+        str1.strcpy(str2);
+        p.println(str1 + "\"");
 
-        p.println("\nstrlen\n");
-        op("question.strlen() = ", Integer.toString(question.strlen()));
+        p.println(String.format("\n2. strlen\n\"%1$s\".strlen() = %2$s", str1, str1.strlen()));
 
-        p.println("\nstrcpy\n");
-        reply.strcpy(question);
-        op("reply.strcpy(question): reply = ", reply);
+        p.print(String.format("\n3. strcat\n\"%1$s\".strcat(\"%2$s\") = \"", str1, str2));
+        str1.strcat(str2);
+        p.println(str1 + "\"");
 
-        p.println("\nstrcmp\n");
-        op("(strcmp(reply, question) == 0) = ",
-                Boolean.toString(strcmp(reply, question) == 0));
+        p.println(String.format("\n4. strcmp\nstrcmp(\"%1$s\", \"%2$s\") = %3$s", str1, str3, strcmp(str1, str3)));
 
-    }
-
-    private static void op(String a, String str)
-    {
-        System.out.println(a + str);
-    }
-
-    private static void op(String a, Text b)
-    {
-        System.out.println(a + "\"" + b + "\"");
+        p.println(String.format("\n3. charAt\n\"%1$s\".charAt(%2$s) = \"%3$s\"", str3, str3.strlen()/2, str3.charAt(str3.strlen()/2)));
     }
 }

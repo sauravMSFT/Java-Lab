@@ -1,11 +1,11 @@
-package com.lab;
+package com.lab.quadratic;
 
 /**
  * Created by saurav_msft on 7/27/2016.
  */
 public class Complex
 {
-    private double real, imag;
+    protected double real, imag;
 
     public Complex(double r, double i)
     {
@@ -13,7 +13,7 @@ public class Complex
         imag = i;
     }
 
-    private String Value(double val)
+    protected String value(double val)
     {
         return (val > 0) ? ("+" + val) : Double.toString(val);
     }
@@ -21,9 +21,9 @@ public class Complex
     public String toString()
     {
         if(imag == 0)
-            return Value(real);
+            return value(real);
         if(real == 0)
-            return Value(imag) + "i";
-        return Value(real) + " " + Value(imag) + "i";
+            return value(imag) + "i";
+        return value(real) + " " + value(imag) + "i";
     }
 }
