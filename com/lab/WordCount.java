@@ -16,30 +16,23 @@ public class WordCount
     {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter a bunch of words: ");
-        String line = br.readLine();
+        tokenize(br.readLine().trim());
+    }
 
+    private static void tokenize(String line)
+    {
         StringTokenizer words = new StringTokenizer(line, " ");
-
         HashMap<String, Integer> wordMap = new HashMap<>();
-
-        while(words.hasMoreTokens())
+        while (words.hasMoreTokens())
         {
             String word = words.nextElement().toString();
             if (wordMap.containsKey(word))
-            {
                 wordMap.put(word, wordMap.get(word) + 1);
-            }
             else
                 wordMap.put(word, 1);
         }
-
-        displayWordCounts(wordMap);
-    }
-    private static void displayWordCounts(HashMap<String, Integer> wordMap)
-    {
-        for(String key: wordMap.keySet())
-        {
-            System.out.println("(" + key + ", " + wordMap.get(key) + ")");
-        }
+        System.out.printf("%-10s %10s\n", "WORD", "FREQUENCY");
+        for (String key : wordMap.keySet())
+            System.out.printf("%-10s %10s\n", key, wordMap.get(key));
     }
 }
